@@ -11,9 +11,9 @@ Felles [byggestandard](https://github.com/sbbstudio/always-agents/blob/main/agen
 - `src/` — serverkode, konfigurasjon, ruter, komponentmanifest og HTML-visninger.
 - `public/` — nettleserens JavaScript og CSS.
 - `config/` — miljøkonfigurasjon; `config/local.json` er lokal og skal ikke committes.
-- `docs/` — prosjektets oppgavegrunnlag og beslutninger.
+- `docs/` — prosjektets oppgavegrunnlag og beslutninger; Amedias skisser ligger samlet i `docs/case/sketches/`.
 - `.github/` — PR-mal og senere workflows.
-- `.vscode/` — eksisterende editoroppsett.
+- `.vscode/` — prosjektets editoroppsett: gruppering av støttefiler og skjuling av installerte pakker/verktøymapper.
 
 Tester legges i en `tests/`-mappe når testarbeidet begynner. Legg da mappen til i README i samme PR. Nye prosjektfiler legges i disse mappene.
 
@@ -25,7 +25,10 @@ Tester legges i en `tests/`-mappe når testarbeidet begynner. Legg da mappen til
 - `package.json` og `package-lock.json` — npm-manifest og låste avhengigheter.
 - `.gitignore` — utelatelser fra versjonskontroll.
 - `.eslintrc.cjs` og `.eslintignore` — lint-oppsett fra startkoden.
-- `large-sketch.png` og `small-sketch.png` — Amedias opprinnelige layoutskisser.
+
+## Navn og arbeidsoversikt
+
+README gir leserekkefølgen. Behold standardnavn for verktøyenes inngangsfiler. Prosjektspesifikke filer navngis etter ansvaret: `public/frontpage.js`, `public/frontpage.css` og `src/manifests/frontpage-manifest.js`. Skisser ligger med oppgaveteksten. Installerte pakker og editorgruppering skal ikke endre de fysiske stiene verktøyene trenger.
 
 ## Arbeidsflyt
 
