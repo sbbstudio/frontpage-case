@@ -13,7 +13,7 @@ Felles [byggestandard](https://github.com/sbbstudio/always-agents/blob/main/agen
 - `tests/` — automatiserte node:test-kontroller med faste API-svar.
 - `config/` — miljøkonfigurasjon; `config/local.json` er lokal og skal ikke committes.
 - `docs/` — prosjektets oppgavegrunnlag, beslutninger og verifikasjonsbilder; Amedias skisser ligger samlet i `docs/case/sketches/`.
-- `.github/` — PR-mal og senere workflows.
+- `.github/` — PR-mal og GitHub Actions-workflow i workflows/ci.yml.
 - `.vscode/` — prosjektets editoroppsett: gruppering av støttefiler og skjuling av installerte pakker/verktøymapper.
 
 Tester legges i `tests/`. Nye prosjektfiler legges i disse mappene.
@@ -54,4 +54,4 @@ Bruk én tom linje før deloverskrifter (`// ---- Ansvar ----` i JavaScript og `
 
 ## Verifikasjon
 
-Velg kontroller etter endringen: dokumentlenker for dokumentasjon, reelle tester for logikk og nettlesersjekk for visuell oppførsel. `npm test` kjører node:test. Teaserfilter, antall, rekkefølge, API-feil og timeout kontrolleres uten live API. HTTP-testene bruker en midlertidig lokal server; CI gjenstår i KR-planen.
+Velg kontroller etter endringen: dokumentlenker for dokumentasjon, reelle tester for logikk og nettlesersjekk for visuell oppførsel. `npm test` kjører node:test. Teaserfilter, antall, rekkefølge, API-feil og timeout kontrolleres uten live API. HTTP-testene bruker en midlertidig lokal server; GitHub Actions kjører npm ci og npm test på Node 24 ved pull_request, push til master og workflow_dispatch. Rød/grønn GitHub-verifikasjon og øvrige KR-kriterier må dokumenteres før KR9 lukkes.
