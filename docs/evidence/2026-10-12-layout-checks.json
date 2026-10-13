@@ -1,0 +1,56 @@
+[
+  {
+    "columns": "272px",
+    "hero": 272,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "grid",
+    "viewport": 320,
+    "width": 304
+  },
+  {
+    "columns": "342px",
+    "hero": 342,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "grid",
+    "viewport": 390,
+    "width": 374
+  },
+  {
+    "columns": "651px",
+    "hero": 651,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "grid",
+    "viewport": 699,
+    "width": 683
+  },
+  {
+    "columns": "201.328px 201.336px 201.328px",
+    "hero": 651.9921875,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "block",
+    "viewport": 700,
+    "width": 684
+  },
+  {
+    "columns": "224px 224px 224px",
+    "hero": 720,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "block",
+    "viewport": 768,
+    "width": 752
+  },
+  {
+    "columns": "300px 300px 300px",
+    "hero": 948,
+    "overflow": false,
+    "pageOverflow": false,
+    "row": "block",
+    "viewport": 1440,
+    "width": 980
+  }
+]

@@ -42,9 +42,9 @@ for (const [name, apiFetch] of [
     const response = await httpFetch(`${base}/component?publication=www.ba.no`);
     assert.equal(response.status, 502);
     assert.equal(await response.text(), 'Kunne ikke hente nyheter nå.');
-    const next = await httpFetch(`${base}/manifest`);
+    const next = await httpFetch(`${base}/publication-selector`);
     assert.equal(next.status, 200);
-    assert.match(await next.text(), /frontpage-case-component/);
+    assert.match(await next.text(), /Velg avis/);
   });
 }
 
@@ -90,6 +90,6 @@ test('samlet timeout avbryter treg JSON-lesing i neste gruppe', { timeout: 10000
   assert.equal(await response.text(), 'Kunne ikke hente nyheter nå.');
   assert.equal(firstSignal.aborted, true);
   assert.equal(calls, 2);
-  const next = await httpFetch(`${base}/manifest`);
+  const next = await httpFetch(`${base}/publication-selector`);
   assert.equal(next.status, 200);
 });

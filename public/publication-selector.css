@@ -1,0 +1,42 @@
+/*
+{
+  "ansvar": "Style avisvelgerens lenker og fokusmarkering",
+  "inn": "nav.publication-selector med lenker",
+  "ut": "Lenker i en rad med hover- og tastaturmarkering",
+  "brukes_av": "Nettleserens include-kode via publication-selector-manifest.js",
+  "ved_feil": "Ingen feilhåndtering; gjelder elementer som matcher selektorene",
+  "sideeffekter": "Endrer visningen av avisvelgeren"
+}
+*/
+
+/* ---- Avisvelgerens layout ---- */
+/* To tydelige lenker med luft rundt. */
+.publication-selector {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+}
+
+/* ---- Avislenker ---- */
+/* Bare lenkene inne i avisvelgeren får denne stylingen. */
+.publication-selector a {
+  padding: 8px 16px;
+  border: 1px solid #162950;
+  border-radius: 4px;
+  color: #162950;
+  background: white;
+  font-family: Arial, sans-serif;
+  text-decoration: none;
+}
+
+/* ---- Markering ved mus ---- */
+.publication-selector a:hover {
+  background: #eef1f7;
+}
+
+/* ---- Markering ved tastatur ---- */
+/* Synlig markering når man navigerer med tastaturet. */
+.publication-selector a:focus-visible {
+  outline: 2px solid #162950;
+  outline-offset: 3px;
+}

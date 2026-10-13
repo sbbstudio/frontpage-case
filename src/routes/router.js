@@ -15,7 +15,9 @@ import fetchTeasers from '../fetch-teasers.js';
 
 // ---- Visninger og komponentmanifest ----
 import preview from '../views/preview.view.js';
+import renderPublicationSelector from '../views/publication-selector.view.js';
 import manifest from '../manifests/frontpage-manifest.js';
+import publicationSelectorManifest from '../manifests/publication-selector-manifest.js';
 
 const router = express.Router();
 
@@ -27,6 +29,19 @@ const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => (
   '"': '&quot;',
   "'": '&#39;'
 })[character]);
+
+// ---- Avisvelger ----
+// Manifest: forteller include-komponenten hvor avisvelgerens HTML og CSS kan hentes.
+router.get('/publication-selector/manifest', (req, res) => {
+  res.json(publicationSelectorManifest);
+});
+
+// HTML: leverer avisvelgerens lenker til include-komponenten.
+router.get('/publication-selector', (req, res) => {
+  res.type('text/html');
+  const html = renderPublicationSelector();
+  res.end(html);
+});
 
 // ---- Teasere ----
 // Manifest: forteller include-komponenten hvor teasernes HTML, CSS og JavaScript kan hentes.
