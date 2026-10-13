@@ -1,4 +1,16 @@
-// Et fungerende manifest, men du har lov til å endre om du trenger det
+/*
+{
+  "ansvar": "Beskrive hvordan include-koden henter teaserkomponenten",
+  "inn": "Faste komponentadresser og beskrivelser av publication og count",
+  "ut": "Manifestobjekt med HTML-, CSS- og JavaScript-adresser",
+  "brukes_av": "Routerens GET /manifest og nettleserens include-kode",
+  "ved_feil": "Manifestet validerer ikke forespørsler; routeren gjør det",
+  "sideeffekter": "Ingen; eksporterer et objekt"
+}
+*/
+
+// ---- Manifest for teaserkomponenten ----
+// Include-koden leser adressene og parameterbeskrivelsene nedenfor.
 export default {
   manifestVersion: '2.0.0',
   provider: {
@@ -14,6 +26,8 @@ export default {
       'mobile'
     ],
     tags: [],
+
+    // ---- HTML-adresse og parametere ----
     markup: {
       urlTemplate: 'http://localhost:8080/frontpage-case/component', // Kan host byttes ut med en verdi fra config? Hvorfor ønsker man å gjøre det?
       queryParameters: [
@@ -32,6 +46,8 @@ export default {
         }
       ]
     },
+
+    // ---- CSS og JavaScript ----
     resources: {
       css: [
         'http://localhost:8080/frontpage-case/assets/frontpage.css' // Kan host byttes ut med en verdi fra config?

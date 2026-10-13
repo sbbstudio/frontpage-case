@@ -18,7 +18,7 @@
     "build": "echo \"Info: no build script specified\" && exit 0",
     "dev-start": "node --watch src/server.js",
     "start": "node src/server.js",
-    "test": "echo \"Maybe add some tests?\""
+    "test": "node --test"
   },
   "dependencies": {
     "compression": "1.8.1",

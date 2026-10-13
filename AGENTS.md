@@ -10,12 +10,13 @@ Felles [byggestandard](https://github.com/sbbstudio/always-agents/blob/main/agen
 
 - `src/` — serverkode, konfigurasjon, ruter, komponentmanifest og HTML-visninger.
 - `public/` — nettleserens JavaScript og CSS.
+- `tests/` — automatiserte node:test-kontroller med faste API-svar.
 - `config/` — miljøkonfigurasjon; `config/local.json` er lokal og skal ikke committes.
-- `docs/` — prosjektets oppgavegrunnlag og beslutninger; Amedias skisser ligger samlet i `docs/case/sketches/`.
+- `docs/` — prosjektets oppgavegrunnlag, beslutninger og verifikasjonsbilder; Amedias skisser ligger samlet i `docs/case/sketches/`.
 - `.github/` — PR-mal og senere workflows.
 - `.vscode/` — prosjektets editoroppsett: gruppering av støttefiler og skjuling av installerte pakker/verktøymapper.
 
-Tester legges i en `tests/`-mappe når testarbeidet begynner. Legg da mappen til i README i samme PR. Nye prosjektfiler legges i disse mappene.
+Tester legges i `tests/`. Nye prosjektfiler legges i disse mappene.
 
 ## Rotfiler
 
@@ -32,6 +33,14 @@ README gir leserekkefølgen. Behold standardnavn for verktøyenes inngangsfiler.
 
 ## Arbeidsflyt
 
+### Visuell oppdeling av kode
+
+JavaScript-, CommonJS- og CSS-filer har en kort JSON-oversikt i en blokkkommentar øverst, etter eventuell shebang og lisensinformasjon. Bruk feltene `ansvar`, `inn`, `ut`, `brukes_av`, `ved_feil` og `sideeffekter`; hold disse seks feltene i samme rekkefølge og bruk korte tekstverdier. Nødvendige funksjonsdetaljer forklares nær funksjonen. Beskriv filens ansvar og kontrakter, ikke en full funksjonsliste eller testhistorikk. Oppdater oversikten ved endret oppførsel. Dette er et lokalt dokumentasjonsformat, ikke JSDoc eller runtime-konfigurasjon. Rene JSON-filer beholder gyldig JSON uten kommentarer. Se beslutning 0006.
+
+Bruk én tom linje før deloverskrifter (`// ---- Ansvar ----` i JavaScript og `/* ---- Ansvar ---- */` i CSS). Hold overskriften, forklaringen og tilhørende kode samlet. Skill selvstendige funksjoner, ruter og CSS-regler med en tom linje. Mellomrom viser visuell oppdeling; en deloverskrift inne i en funksjon betyr et steg i samme funksjon. Behold tilsvarende oppdeling ved senere endringer.
+
+`src/fetch-teasers.js` eier API-henting og klargjøring av teaserdata. `/component` i `src/routes/router.js` eier parametervalidering, HTTP-respons og teaser-HTML. Funksjonen returnerer data eller kaster feil; ruten oversetter hentefeil til HTTP 502.
+
 - Ti KR-issues eier leveransene og sjekklistene. Planlegg små PR-er med ett formål hver; én KR kan kreve flere PR-er.
 - Lenke PR til relevant issue. Bruk `Closes #N` bare når alle KR-kriteriene faktisk er oppfylt; ellers bruk `Refs #N`.
 - Status: Todo → In progress → Review → Done. En åpen PR betyr ikke at et KR er ferdig.
@@ -43,4 +52,4 @@ README gir leserekkefølgen. Behold standardnavn for verktøyenes inngangsfiler.
 
 ## Verifikasjon
 
-Velg kontroller etter endringen: dokumentlenker for dokumentasjon, reelle tester for logikk og nettlesersjekk for visuell oppførsel. Den eksisterende `npm test`-plassholderen er ikke en test. Manglende tester, CI og verifisert Node-versjon er åpne leveranser i KR-planen.
+Velg kontroller etter endringen: dokumentlenker for dokumentasjon, reelle tester for logikk og nettlesersjekk for visuell oppførsel. `npm test` kjører node:test. Teaserfilter, antall, rekkefølge, API-feil og timeout kontrolleres uten live API. HTTP-testene bruker en midlertidig lokal server; CI gjenstår i KR-planen.
