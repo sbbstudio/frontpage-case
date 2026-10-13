@@ -1,5 +1,7 @@
 # CASE: Lag en forside
 
+> **Historisk oppgavegrunnlag fra Amedia.** Oppgaveteksten under er bevart; fil- og bildelenker er tilpasset plasseringen. Node 18 og omtalen av to include-elementer beskriver startkoden. Dagens løsning bruker Node 24 og tre include-elementer. Se [leseguiden](README.md) og [prosjektets kjørebeskrivelse](../../README.md) for gjeldende oppsett.
+
 I dette caset skal du lage en forside for en nettavis. Forsiden skal være i form av en [Amedia Component](https://amedia.slite.com/app/docs/fs~VBEBXM3/Amedia-Component). En Amedia Component består av et manifest som beskriver et endepunkt som leverer HTML og hvilke parametre som skal sendes inn til dette endepunktet. Videre inneholder manifestet url'er til evt. script- og css-filer. I dette caset ligger det allerde klart en fungerende Amedia Component du kan arbeide videre på.
 
 ## Sett opp miljøet
