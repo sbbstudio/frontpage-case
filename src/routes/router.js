@@ -3,7 +3,7 @@ import express from 'express';
 import logger from '../logger.js';
 // Import manifests
 import preview from '../views/preview.view.js';
-import manifest from '../manifests/manifests.js';
+import manifest from '../manifests/frontpage-manifest.js';
 
 // Import Views
 

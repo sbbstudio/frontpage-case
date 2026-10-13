@@ -34,10 +34,10 @@ export default {
     },
     resources: {
       css: [
-        'http://localhost:8080/frontpage-case/assets/style.css' // Kan host byttes ut med en verdi fra config?
+        'http://localhost:8080/frontpage-case/assets/frontpage.css' // Kan host byttes ut med en verdi fra config?
       ],
       js: [
-        'http://localhost:8080/frontpage-case/assets/script.js' // Kan host byttes ut med en verdi fra config?
+        'http://localhost:8080/frontpage-case/assets/frontpage.js' // Kan host byttes ut med en verdi fra config?
       ]
     },
   }

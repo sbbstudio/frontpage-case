@@ -6,6 +6,14 @@ Et JavaScript/Node.js-prosjekt der jeg videreutvikler [Amedias forsidecase](http
 
 **Status:** Under arbeid. Repoet inneholder foreløpig Amedias startkode og en plan med ti målbare leveranser. Forsidefunksjonen er ikke implementert ennå. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
 
+### Leserekkefølge
+
+1. **Prosjekt og kjøring:** denne siden, deretter [package.json](package.json).
+2. **Applikasjonen:** [server](src/server.js) → [ruter](src/routes/router.js) → [preview](src/views/preview.view.js) og [komponentmanifest](src/manifests/frontpage-manifest.js). Nettleserens filer: [frontpage.js](public/frontpage.js) og [frontpage.css](public/frontpage.css).
+3. **Kontroller:** [KR9](https://github.com/sbbstudio/frontpage-case/issues/9) beskriver planlagt testsuite. Den finnes ikke ennå.
+4. **Oppgave og valg:** [originaloppgave og skisser](docs/case/amedia-original.md), deretter [beslutninger](docs/decisions/).
+5. **Oppsett:** [applikasjonskonfigurasjon](src/config/config.js), [miljøfiler](config/) og [arbeidsregler](AGENTS.md).
+
 ### Leveranseplan
 
 | Byggedag | KR | Resultat |
@@ -82,9 +90,26 @@ Preview bruker eksterne Amedia-ressurser for komponentlasting og header og treng
 - `src/` — Node/Express-server, konfigurasjon, ruter, manifest og preview.
 - `public/` — JavaScript og CSS som serveren leverer til nettleseren.
 - `config/` — konfigurasjonsfiler for development, test og production.
-- `docs/` — opprinnelig oppgave og beslutninger for prosjektet.
+- `docs/` — oppgavegrunnlag i `case/`, skisser i `case/sketches/` og tekniske valg i `decisions/`.
 - `.github/` — mal for pull requests; CI kommer i KR9.
-- `.vscode/` — editorinnstillinger fra startkoden.
+- `.vscode/` — innstillinger for editorens arbeidsvisning.
+
+### Fast oppsett og prosjektinnhold
+
+| Kategori | Plassering |
+| --- | --- |
+| Felles repo-innganger | `README.md`, `AGENTS.md`, `CLAUDE.md`, `.gitignore` |
+| Node/npm-oppsett | `package.json`, `package-lock.json` |
+| Verktøyoppsett | `.github/`, `.vscode/`, `.eslintrc.cjs`, `.eslintignore` |
+| Denne applikasjonen | `src/`, `public/`, `config/` |
+| Denne oppgaven og valgene våre | `docs/` |
+| Pakker installert av npm | `node_modules/` — lokalt og ignorert av Git |
+
+### Arbeidsvisning i VS Code
+
+Støttefiler grupperes under `README.md` (arbeidsregler og Git-oppsett) og `package.json` (låsefil og lint-oppsett). Utvid pilen for å se dem. Dette er visuell gruppering; filene ligger fortsatt i roten, der verktøyene finner dem.
+
+`node_modules/`, `.github/` og `.vscode/` er skjult i filoversikten. De er ikke slettet. Åpne [editoroppsettet](.vscode/settings.json) for å endre `files.exclude`, eller bruk `Cmd+P`/`Ctrl+P` med filstien for å åpne en bestemt fil. README gir leserekkefølgen; filutforskeren beholder vanlig sortering.
 
 ## Regler og beslutninger
 
