@@ -30,6 +30,7 @@ export default async function fetchTeasers({ publication, count }) {
   apiURL.searchParams.set('types', 'story');
   apiURL.searchParams.set('limit', '20');
   const teasers = [];
+  const publicationOrigin = new URL(`https://${publication}`).origin;
 
   // ---- Avgrens ventetiden ----
   // Samme signal gjelder alle grupper og responsinnholdet, så neste gruppe ikke får ny frist.
@@ -71,6 +72,8 @@ export default async function fetchTeasers({ publication, count }) {
     // ---- Klargjør og filtrer sakene ----
     // Plukk ut tittel, artikkelsti og stort bilde fra API-strukturen.
     // Behold bare saker med tittel, lokal artikkelsti og HTTPS-bilde.
+    // URL-parseren kan tolke backslash eller skjulte tabulatorer som et nytt domene.
+    // Kontroller derfor også at den ferdige artikkellenken blir på valgt avis.
     const stories = Array.isArray(apiData?._embedded) ? apiData._embedded : [];
     const validTeasers = stories.map((story) => ({
       title: story?.title,
@@ -81,6 +84,8 @@ export default async function fetchTeasers({ publication, count }) {
     })).filter((story) =>
       typeof story.title === 'string' && story.title.trim() &&
       typeof story.path === 'string' && story.path.startsWith('/') && !story.path.startsWith('//') &&
+      URL.canParse(story.path, publicationOrigin) &&
+      new URL(story.path, publicationOrigin).origin === publicationOrigin &&
       typeof story.imageUrl === 'string' && story.imageUrl.startsWith('https://')
     );
     // Ta bare det antallet vi fortsatt trenger. Bevar rekkefølgen fra API-et.

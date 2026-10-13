@@ -16,6 +16,8 @@ Serveren henter saker i grupper på 20 når komponentruten åpnes. Hvis en grupp
 
 ## Kontroller og begrensninger
 
+Artikkelstier må bli på den valgte avisens origin når de tolkes som en URL. Et enkelt krav om å starte med `/` er ikke nok: backslash eller skjulte tabulatorer kan få URL-parseren til å bytte domene. Ugyldige URL-er og stier som bytter origin filtreres bort før HTML bygges. En regresjonstest dekker disse tilfellene og en gyldig lokal sti med query-parametere.
+
 API-hentingen bruker en samlet frist på fem sekunder for alle grupper og lesing av responsinnhold. Nettverksfeil, HTTP-feil, ugyldig JSON og timeout gir HTTP 502 med en enkel beskjed. Et tomt eller uventet svar avslutter hentingen og beholder listen samlet så langt. Denne avgrensningen prioriterer at forhåndsvisningen svarer innen rimelig tid; en treg kilde kan derfor gi feil selv om den ville svart senere.
 
 Ved den opprinnelige kontrollen kontrollerte Codex lokalt at `count=1` ga én teaser, `count=10` ga åtte teasere fra et svar med ti saker, og ugyldig `count` ga HTTP 400. Rune så de faktiske teaserne i previewen og formulerte begrunnelsen for server-side rendering. To av de ti sakene manglet bilde i feltet som komponenten bruker, og ble hoppet over.

@@ -67,6 +67,20 @@ test('fjerner saker med manglende eller ubrukbare bilder', async (t) => {
   assert.deepEqual(await fetchTeasers({ publication: 'www.ba.no', count: 10 }), []);
 });
 
+// ---- Artikkellenker blir på valgt avis ----
+test('fjerner artikkelstier som URL-parseren flytter til et annet domene', async (t) => {
+  usePages(t, [[
+    story('Backslash', '/\\outside.example/story', 'https://images.example/1.jpg'),
+    story('Tabulator', '/\t/outside.example/story', 'https://images.example/2.jpg'),
+    story('Ny linje', '/\n/outside.example/story', 'https://images.example/3.jpg'),
+    story('Ugyldig domene', '/\\[invalid/story', 'https://images.example/4.jpg'),
+    story('Lokal sak', '/lokal?side=2', 'https://images.example/5.jpg')
+  ]]);
+  const teasers = await fetchTeasers({ publication: 'www.ba.no', count: 10 });
+  assert.deepEqual(teasers.map((teaser) => teaser.path), ['/lokal?side=2']);
+  assert.equal(new URL(teasers[0].path, 'https://www.ba.no').origin, 'https://www.ba.no');
+});
+
 // ---- Rekkefølge etter filtrering ----
 test('beholder API-rekkefølgen når saker mellom gyldige saker fjernes', async (t) => {
   usePages(t, [[
