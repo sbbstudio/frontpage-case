@@ -68,6 +68,8 @@ Forventet resultat foreløpig er Drammens Tidende-headeren, en avisvelger med DT
 
 ### Avisvelger: fra include til HTML og CSS
 
+Teaserfilteret kontrollerer også at den ferdige artikkellenken blir på valgt avis, selv om API-et skulle gi en feilformet sti. Automatiske tester dekker domenebytte via backslash og skjulte tegn.
+
 [preview.view.js](src/views/preview.view.js) setter sammen header, avisvelger og teasere med tre `amedia-include`-elementer. Headeren leveres av Amedia; avisvelgeren og teaserne leveres av vår server.
 
 Avisvelgerens include peker på `/frontpage-case/publication-selector/manifest`. Derfra er kjeden:
