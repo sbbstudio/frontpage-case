@@ -1,4 +1,15 @@
 #!/usr/bin/env node
+/*
+{
+  "ansvar": "Starte HTTP-serveren og koble ruter og nettleserressurser",
+  "inn": "Konfigurasjon fra src/config/config.js",
+  "ut": "Server som lytter på konfigurert port",
+  "brukes_av": "npm start → node src/server.js",
+  "ved_feil": "Ufanget feil logges og avslutter prosessen med kode 1",
+  "sideeffekter": "Åpner port, setter opp DNS-cache, logger og registrerer avslutningssignaler"
+}
+*/
+
 import http from 'http';
 import { randomUUID } from 'node:crypto';
 
@@ -11,6 +22,7 @@ import config from './config/config.js';
 import logger from './logger.js';
 import router from './routes/router.js';
 
+// ---- DNS-cache ----
 dnscache({
   enable: true,
   ttl: 30,
@@ -19,15 +31,15 @@ dnscache({
 
 const app = express();
 
-// Configure application
+// ---- Applikasjonsoppsett ----
 app.disable('x-powered-by');
 app.enable('trust proxy');
 
-// Set middleware
+// ---- Middleware ----
 app.use(compression());
 app.use(cors());
 
-// Attach assets route
+// ---- Nettleserens CSS og JavaScript ----
 app.use(
   `${config.get('basePath')}/assets`,
   (req, res, next) => {
@@ -37,32 +49,31 @@ app.use(
   express.static('public')
 );
 
+// ---- Prosjektets ruter ----
 app.use(config.get('basePath'), router);
 
-// Error handling
+// ---- Logging av middleware-feil ----
 app.use((error, _req, res, next) => {
   logger.error(error);
   // do not leak stack trace to response
   next();
 });
 
-// Set up http server and Export application
+// ---- HTTP-server ----
 const server = http.createServer(app);
 
-// Start application
+// ---- Start serveren ----
 server.listen(config.get('httpServerPort'), () => {
   logger.info(`server running at http://localhost:${server.address().port}`);
   logger.info(`server process has pid ${process.pid}`);
-  logger.info(
-    `api routes available under http://localhost:${
+  logger.info(`api routes available under http://localhost:${
       server.address().port
     }${config.get('basePath')}`
   );
 });
 
-// Catch uncaught exceptions, log it and take down server in a nice way.
-// Upstart or forever should handle kicking the process back into life!
-
+// ---- Avslutt ved ufanget feil ----
+// Logg feilen, lukk serveren og avslutt prosessen med feilkode.
 process.on('uncaughtException', (error) => {
   logger.error(
     'shutdown - server taken down by force due to a uncaughtException'
@@ -75,8 +86,7 @@ process.on('uncaughtException', (error) => {
   });
 });
 
-// Listen for SIGINT (Ctrl+C) and do a gracefull takedown of the server
-
+// ---- Avslutt med Ctrl+C ----
 process.on('SIGINT', () => {
   logger.info('shutdown - got SIGINT - taking down server gracefully');
   server.close();
@@ -85,8 +95,7 @@ process.on('SIGINT', () => {
   });
 });
 
-// Listen for SIGTERM (Upstart) and do a gracefull takedown of the server
-
+// ---- Avslutt ved SIGTERM ----
 process.on('SIGTERM', () => {
   logger.info('shutdown - got SIGTERM - taking down server gracefully');
   server.close();

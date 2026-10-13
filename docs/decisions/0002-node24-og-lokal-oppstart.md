@@ -8,7 +8,7 @@ Prosjektet bruker Node 24 LTS. Node 18 fra originaloppgaven er ute av støtte. N
 
 `package.json` og rotoppføringen i låsefilen angir `>=24 <25`. Ingen pakkeversjoner eller applikasjonslogikk er endret. `npm start` er den verifiserte oppstartskommandoen.
 
-## Kontrollert av Codex
+## Opprinnelig oppstartskontroll 3. oktober 2026
 
 - Node 24.21.0 og npm 11.19.0, med Node hentet gjennom `npm exec --package=node@24`.
 - Installasjon i en separat lokal klone uten eksisterende `node_modules` eller `config/local.json`. Manifestene med Node-kravet ble kopiert inn før `npm ci`.
@@ -18,12 +18,12 @@ Prosjektet bruker Node 24 LTS. Node 18 fra originaloppgaven er ute av støtte. N
 - Nettleseren viste Drammens Tidende-headeren og den lokale plassholderen. Ekstern komponentlaster og header-manifest svarte med HTTP 200. Ingen feil eller advarsler ble observert i nettleserloggen ved kontrollen.
 - Serveren stoppet ved SIGINT.
 
-Dette verifiserer startkoden lokalt. Rune skal fortsatt gå gjennom kommandoene og resultatet før KR1 lukkes.
+Ressursnavnene og plassholderen ovenfor tilhører startkoden på kontrolldatoen. Gjeldende filer heter frontpage.js og frontpage.css; komponenten viser nå API-teasere. Dette verifiserer startkoden lokalt. Rune skal fortsatt gå gjennom kommandoene og resultatet før KR1 lukkes.
 
 ## Observerte begrensninger
 
 - `npm run dev-start` feilet med «Failed running 'src/server.js'» i dette miljøet. Direkte kjøring med `--watch --watch-preserve-output` ga samme resultat uten forklarende feilmelding. Årsaken er uavklart. Vanlig oppstart fungerer; automatisk omstart er ikke verifisert.
 - Preview og manifest har hardkodet `http://localhost:8080/frontpage-case`. En annen `PORT` flytter serveren, men oppdaterer ikke disse adressene.
 - Preview er avhengig av Amedias eksterne komponentlaster og header. Headerens relative lenker peker lokalt og har ikke tilhørende ruter i casen.
-- `npm test` er en plassholder. Oppstartskontrollen er ingen funksjonell testsuite.
+- Ved oppstartskontrollen var `npm test` en plassholder. Nå kjører den node:test med teaser- og API-feiltester; [README](../../README.md) beskriver gjeldende dekning. `npm run build` er fortsatt en plassholder.
 - `npm audit` rapporterte `convict` (critical), `brace-expansion`, `minimatch` og `path-to-regexp` (high), `qs` (moderate) og `body-parser` (low). Rapporten oppgir patchoppdatering til `convict` 6.2.5 og tilgjengelige rettelser for de øvrige. Oppdateringene og kompatibiliteten er ikke testet her; dette er gjenstående avhengighetsarbeid før tjenesten publiseres.

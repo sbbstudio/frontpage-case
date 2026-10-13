@@ -1,9 +1,21 @@
+/*
+{
+  "ansvar": "Lese og kontrollere applikasjonens konfigurasjon",
+  "inn": "Standardverdier, miljøvariabler, CLI-argumenter og lokal- eller miljøfil",
+  "ut": "Convict-konfigurasjon med get og getProperties",
+  "brukes_av": "Server, logger og preview-visning",
+  "ved_feil": "Fil-, JSON- og valideringsfeil kastes til kallestedet",
+  "sideeffekter": "Leser package.json og konfigurasjonsfil fra disk"
+}
+*/
+
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import convict from 'convict';
 
+// ---- Les prosjektets npm-manifest ----
 let pkgJSONPath = new URL('../../package.json', import.meta.url).pathname;
 const isWin = process.platform === 'win32';
 if (isWin) {
@@ -14,7 +26,7 @@ const pckage = JSON.parse(fs.readFileSync(pkgJSONPath, 'utf8'));
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Configuration schema
+// ---- Konfigurasjonsskjema ----
 const conf = convict({
   env: {
     doc: 'Applicaton environments',
@@ -121,8 +133,8 @@ const conf = convict({
   },
 });
 
-// Load config files
-
+// ---- Last miljøkonfigurasjonen ----
+// Lokal konfigurasjon brukes hvis den finnes; ellers brukes fila for valgt miljø.
 if (fs.existsSync(path.resolve(dirname, '../../config/local.json'))) {
   conf.loadFile([path.resolve(dirname, '../../config/local.json')]);
 } else {
@@ -131,7 +143,8 @@ if (fs.existsSync(path.resolve(dirname, '../../config/local.json'))) {
   ]);
 }
 
-// Validate all properties and export it
+// ---- Kontroller konfigurasjonen ----
 conf.validate();
 
+// ---- Eksport av konfigurasjonen ----
 export default conf;
