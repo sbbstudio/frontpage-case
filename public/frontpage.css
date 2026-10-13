@@ -1,9 +1,101 @@
+/*
+{
+  "ansvar": "Style teaserlayout etter Amedias skisser",
+  "inn": "amedia-frontpage med article, a, img og h2",
+  "ut": "Hovedsak og mobilrader eller tre kolonner, maksimalt 980px",
+  "brukes_av": "Nettleserens include-kode via frontpage-manifest.js",
+  "ved_feil": "Ingen feilhåndtering; gjelder elementer som matcher selektorene",
+  "sideeffekter": "Endrer visningen av teaserkomponenten"
+}
+*/
+
+/* ---- Teasernes felles layout ---- */
 amedia-frontpage {
-  background: hotpink;
-  color: crimson;
+  background: #ffffff;
+  color: #000000;
+  box-sizing: border-box;
+  display: grid;
+  font-family: Arial, sans-serif;
+  font-size: 1rem;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  margin: 0 auto;
+  max-width: 980px;
+  padding: 1rem;
+  text-align: left;
+}
+
+/* ---- Teaserkort og artikkellenker ---- */
+amedia-frontpage article {
+  /* Lange overskrifter skal brytes, ikke presse kolonnen utenfor skjermen. */
+  min-width: 0;
+}
+amedia-frontpage a {
+  color: inherit;
   display: block;
-  font-family: 'Comic Sans MS', sans-serif;
-  font-size: 3rem;
-  padding: 20vw 0;
-  text-align:center;
+  text-decoration: none;
+}
+amedia-frontpage a:hover h2 {
+  text-decoration: underline;
+}
+amedia-frontpage a:focus-visible {
+  outline: 3px solid #1556b8;
+  outline-offset: 4px;
+}
+
+/* ---- Bilder og overskrifter ---- */
+amedia-frontpage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+amedia-frontpage h2 {
+  font-size: 1.125rem;
+  line-height: 1.3;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---- Hovedsaken ---- */
+/* Første sak beholder API-plassen sin og fyller hele bredden i begge skissene. */
+amedia-frontpage article:first-child {
+  grid-column: 1 / -1;
+}
+amedia-frontpage article:first-child img {
+  aspect-ratio: 7 / 3;
+  object-position: center top;
+}
+amedia-frontpage article:first-child h2 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.15;
+  margin-top: 0.75rem;
+}
+
+/* ---- Øvrige saker på smal skjerm ---- */
+amedia-frontpage article:not(:first-child) a {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 30% minmax(0, 1fr);
+}
+amedia-frontpage article:not(:first-child) img {
+  aspect-ratio: 1;
+}
+
+/* ---- Tre kolonner på bred skjerm ---- */
+/* Ved 700px får tre kort plass uten at titlene presses inn i smale spalter. */
+@media (min-width: 700px) {
+  amedia-frontpage {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  amedia-frontpage article:not(:first-child) a {
+    display: block;
+  }
+  amedia-frontpage article:not(:first-child) img {
+    aspect-ratio: 8 / 5;
+  }
+  amedia-frontpage article:not(:first-child) h2 {
+    margin-top: 0.75rem;
+  }
 }

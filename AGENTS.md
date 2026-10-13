@@ -31,6 +31,8 @@ Tester legges i `tests/`. Nye prosjektfiler legges i disse mappene.
 
 README gir leserekkefølgen. Behold standardnavn for verktøyenes inngangsfiler. Prosjektspesifikke filer navngis etter ansvaret: `public/frontpage.js`, `public/frontpage.css` og `src/manifests/frontpage-manifest.js`. Skisser ligger med oppgaveteksten. Installerte pakker og editorgruppering skal ikke endre de fysiske stiene verktøyene trenger.
 
+Avisvelgeren bruker navnet `publication-selector` gjennom hele kjeden: `src/views/publication-selector.view.js`, `src/manifests/publication-selector-manifest.js`, `public/publication-selector.css` og rutene `/publication-selector` og `/publication-selector/manifest` i `src/routes/router.js`. `src/views/preview.view.js` inkluderer komponenten via manifestet. Se beslutning 0005.
+
 ## Arbeidsflyt
 
 ### Visuell oppdeling av kode
