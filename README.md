@@ -1,50 +1,70 @@
-# CASE: Lag en forside
+# Forside — Rune Øverland
 
-I dette caset skal du lage en forside for en nettavis. Forsiden skal være i form av en [Amedia Component](https://amedia.slite.com/app/docs/fs~VBEBXM3/Amedia-Component). En Amedia Component består av et manifest som beskriver et endepunkt som leverer HTML og hvilke parametre som skal sendes inn til dette endepunktet. Videre inneholder manifestet url'er til evt. script- og css-filer. I dette caset ligger det allerde klart en fungerende Amedia Component du kan arbeide videre på.
+## Hva dette er
 
-## Sett opp miljøet
+Et JavaScript/Node.js-prosjekt der jeg videreutvikler [Amedias forsidecase](https://github.com/amedia/frontpage-case). Målet er en responsiv avisforside med saker fra Amedias API, tydelig feilhåndtering og dokumenterte tekniske valg.
 
-Det første du må gjøre er å sette opp miljøet.
+**Status:** Under arbeid. Repoet inneholder foreløpig Amedias startkode og en plan med ti målbare leveranser. Forsidefunksjonen er ikke implementert ennå. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
 
-1. Lag en klone av dette repository
-2. Du må ha Node versjon 18 for å kjøre applikasjonen
-3. Installer avhengigheter med `npm install` og kjør opp serveren med `npm run dev-start`
-4. Du skal nå få opp [en nettside](http://localhost:8080/frontpage-case/preview)
+### Leveranseplan
 
-## Lag en forsidekomponent
+| Byggedag | KR | Resultat |
+| --- | --- | --- |
+| 1 | [KR1](https://github.com/sbbstudio/frontpage-case/issues/1) | Casen kjører lokalt på støttet Node. |
+| 1 | [KR2](https://github.com/sbbstudio/frontpage-case/issues/2) | Dataflyten er kartlagt. |
+| 2 | [KR3](https://github.com/sbbstudio/frontpage-case/issues/3) | Saker hentes fra Amedias API. |
+| 2 | [KR4](https://github.com/sbbstudio/frontpage-case/issues/4) | Forsiden viser klikkbare teasere. |
+| 3 | [KR5](https://github.com/sbbstudio/frontpage-case/issues/5) | Saker uten bilde filtreres bort. |
+| 3 | [KR6](https://github.com/sbbstudio/frontpage-case/issues/6) | Brukeren kan bytte avis. |
+| 4 | [KR7](https://github.com/sbbstudio/frontpage-case/issues/7) | Forsiden håndterer feil og tomme svar. |
+| 4 | [KR8](https://github.com/sbbstudio/frontpage-case/issues/8) | Layouten fungerer på mobil og desktop. |
+| 5 | [KR9](https://github.com/sbbstudio/frontpage-case/issues/9) | Løsningen kan kontrolleres automatisk. |
+| 5 | [KR10](https://github.com/sbbstudio/frontpage-case/issues/10) | Repoet er klart for overlevering. |
 
-I filen [src/views/preview.view.js](src/views/preview.view.js) vil du se to [custom elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components). Custom elementet `<amedia-include>` er en klient som lar deg inkludere Amedia Components. Attributtet `manifest` er url'en til komponentens manifest. Eventuelle parametre sendes inn med attributter som prefikset med `param-`. Her ser du at den første peker til en header-komponent som skal ha parameteret `publication`. 
+Byggedagene angir rekkefølge, ikke faste kalenderfrister. Hvert KR har oppgaver, akseptansekriterier og krav til verifikasjon. Status vedlikeholdes i GitHub.
 
-Den andre komponenten har manifestet [http://localhost:8080/frontpage-case/manifest](http://localhost:8080/frontpage-case/manifest). Hvis du ser i manifestet, ser du at det referes til urlTemplate og til css/js-filer. 
+### Arbeidsmåte og AI
 
-`urlTemplate` er en url som leveres av denne serveren og som du kan finne definert i [src/routes/router.js](src/routes/router.js). 
+Arbeidet skjer i små pull requests med avgrenset formål. PR-ene beskriver endringen, begrunnelsen, verifikasjonen og kjente begrensninger.
 
-Du finner en javascript og CSS-fil i mappen `public`. 
+Jeg bruker AI aktivt til oppdeling, implementasjonsforslag, review og dokumentasjon. AI-generert kode og tekst skal vurderes mot kravene og den faktiske oppførselen. Jeg har ansvar for valgene og resultatet; AI-bidrag og utførte kontroller beskrives i hver PR.
 
-## Oppgaven
+### Opphav
 
-Du skal utføre følgende i prioritert rekkefølge. Du kan installere de pakkene du ønsker og står fritt til å løse oppgaven slik du selv vil. Dette inkluderer at du kan velge å skrive om koden i dette caset om du ønsker det.
+Startkoden, oppgaveteksten og skissene er laget av Amedia og deres bidragsytere. Utgangspunktet er commit [`59abcf9`](https://github.com/amedia/frontpage-case/commit/59abcf958526698d58a76cf2d212542fb76c0b95). Historikken er bevart, slik at opprinnelig kode og mine endringer kan skilles.
 
-1. Komponenten skal hente de siste publiserte sakene på en publikasjon via [https://services.api.no/api/acpcomposer/v1.1/search/content/?publicationDomain=www.ba.no&sort=lastPublishedDate&types=story](https://services.api.no/api/acpcomposer/v1.1/search/content/?publicationDomain=www.ba.no&sort=lastPublishedDate&types=story) og du skal tegne ut en forside med teasere. En teaser er bilde og tittel fra nyhetssakene med lenke til artikkelen. Her må du gå litt på jakt i responsen fra API-kallet. Du kan bruke bildet som ligger under `fields.versions.large` i JSON-objektet selv om bildet er litt stort. Du bestemmer selv om du vil tegne ut komponenten serversidet eller clientsidet, men vi vil gjerne at du forteller oss hvorfor du velger en serversidet eller klientsidet rendring.
+[Den opprinnelige oppgaven](docs/case/amedia-original.md) er bevart som referanse, med relative fil- og bildelenker tilpasset plasseringen. Dette repoet er et selvstendig øvingsprosjekt basert på den oppgaven.
 
-2. Filtrer bort alle teasere som ikke har bilde.
+## Slik kjører du det
 
-3. Preview-routen i serveren skal endres slik at den tar publikasjonen (f.eks. www.ba.no) som query-parameter og lar deg dermed velge hvilken forside du skal se.
+Fra repoets rot:
 
-## Design
+```bash
+npm ci
+npm run dev-start
+```
 
-Vi ønsker at layouten skal se slik ut på store skjermer:
+Åpne <http://localhost:8080/frontpage-case/preview>.
 
-<img width="320" src="large-sketch.png" alt="Stor skisse av komponenten" />
+Dette er startkodens oppstartskommandoer. Den opprinnelige oppgaven angir Node 18, som er ute av støtte. Valg og verifisering av en støttet Node-versjon gjøres i **KR1**; oppstarten er foreløpig ikke verifisert for dette prosjektet.
 
-...og slik på mindre skjermer:
+Preview bruker eksterne Amedia-ressurser for komponentlasting og header og trenger nettverk. Egen API-henting av saker bygges i KR3. Konfigurasjonen ligger i `config/` og `src/config/config.js`.
 
-<img width="320" src="small-sketch.png" alt="liten skisse av komponenten" />
+**Tester:** `npm test` er foreløpig en plassholder og gir ikke bevis på at løsningen virker. Reelle tester legges til med funksjonaliteten, og CI kobles på i KR9.
 
- Breakpoints legges der layout brekker. Tross alt derfor det heter "breakpoints".
+## Mappene
 
- Maksbredde skal være 980px for innholdet. Du velger selv font, fontstørrelse, linjehøyde, padding etc.
+- `src/` — Node/Express-server, konfigurasjon, ruter, manifest og preview.
+- `public/` — JavaScript og CSS som serveren leverer til nettleseren.
+- `config/` — konfigurasjonsfiler for development, test og production.
+- `docs/` — opprinnelig oppgave og beslutninger for prosjektet.
+- `.github/` — mal for pull requests; CI kommer i KR9.
+- `.vscode/` — editorinnstillinger fra startkoden.
 
- ## Innlevering
+## Regler og beslutninger
 
- Caset skal enten leveres som en pull request til dette repo'et, eller ved å sende oss en lenke til repo'et ditt.
+- [Lokale arbeidsregler og mappeoversikt](AGENTS.md).
+- [Opphav, presentasjon og arbeidsdeling](docs/decisions/0001-opphav-og-arbeidsmate.md).
+- [Beslutninger](docs/decisions/) oppdateres når valg tas; foreslåtte løsninger merkes som forslag til de er vurdert.
+- [Pull requests](https://github.com/sbbstudio/frontpage-case/pulls?q=is%3Apr) viser endringene og verifikasjonen.
+- Felles byggestandard vedlikeholdes i [always-agents](https://github.com/sbbstudio/always-agents/blob/main/agents/_shared/BUILD-STANDARD.md). Repoets oppstart og forklaringer skal kunne leses selvstendig.
