@@ -11,6 +11,9 @@
   "author": "Amedia",
   "type": "module",
   "main": "./src/server.js",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "build": "echo \"Info: no build script specified\" && exit 0",
     "dev-start": "node --watch src/server.js",
