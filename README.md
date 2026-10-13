@@ -4,7 +4,7 @@
 
 Et JavaScript/Node.js-prosjekt der jeg videreutvikler [Amedias forsidecase](https://github.com/amedia/frontpage-case). Målet er en responsiv avisforside med saker fra Amedias API, tydelig feilhåndtering og dokumenterte tekniske valg.
 
-**Status:** Under arbeid. Komponentruten henter saker fra Amedias API og viser teasere med bilde, tittel og lenke. En egen include-komponent lar brukeren bytte mellom DT og BA. Layout etter Amedias skisser, samlet API-timeout og tester av teaserfilter og API-feil er lagt inn; CI og flere KR-er gjenstår. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
+**Status:** Under arbeid. Komponentruten henter saker fra Amedias API og viser teasere med bilde, tittel og lenke. En egen include-komponent lar brukeren bytte mellom DT og BA. Layout etter Amedias skisser, samlet API-timeout og tester av teaserfilter og API-feil er lagt inn; En CI-workflow er lagt inn; GitHub-verifikasjon og flere KR-er gjenstår. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
 
 ### Leserekkefølge
 
@@ -115,7 +115,7 @@ Preview bruker eksterne Amedia-ressurser for komponentlasting og header og treng
 
 **API-ventetid:** Hele hentingen, inkludert neste grupper og JSON-lesing, deler en frist på fem sekunder. Timeout og API-feil gir HTTP 502 med «Kunne ikke hente nyheter nå.» Et tomt eller uventet svar avslutter hentingen; ingen egnede saker gir en tomtilstand med HTTP 200.
 
-Testene kjøres fra repoets rot med `npm test` på Node 24. `npm run build` er fortsatt en plassholder og er ingen kvalitetskontroll. Ingen CI-workflow er lagt inn ennå.
+Testene kjøres fra repoets rot med `npm test` på Node 24. `npm run build` er fortsatt en plassholder og er ingen kvalitetskontroll. [GitHub Actions-workflowen](.github/workflows/ci.yml) kjører npm ci og npm test på Node 24 ved pull requests, push til master og manuell kjøring. GitHub-resultatene verifiseres i CI-leveransen.
 
 **Kjent avhengighetsgjeld:** `npm audit` rapporterte seks sårbare pakker ved oppstartskontrollen 3. oktober 2026, inkludert en kritisk rapport for `convict`. Se beslutningen om lokal oppstart for detaljer. Avhengighetene er ikke oppdatert i KR1; dette må håndteres og verifiseres før publisering som en kjørende tjeneste.
 
@@ -126,7 +126,7 @@ Testene kjøres fra repoets rot med `npm test` på Node 24. `npm run build` er f
 - `config/` — konfigurasjonsfiler for development, test og production.
 - `tests/` — node:test-kontroller med faste API-svar.
 - `docs/` — oppgavegrunnlag i `case/`, skisser i `case/sketches/`, tekniske valg i `decisions/` og visuelle kontroller i `evidence/`.
-- `.github/` — mal for pull requests; CI kommer i KR9.
+- `.github/` — PR-mal og workflows/ci.yml for automatiserte tester.
 - `.vscode/` — innstillinger for editorens arbeidsvisning.
 
 ### Fast oppsett og prosjektinnhold
