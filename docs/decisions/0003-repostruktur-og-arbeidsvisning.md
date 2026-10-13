@@ -10,7 +10,7 @@ Skissene samles i `docs/case/sketches/`. Forsidens nettleserfiler heter `frontpa
 
 ## Begrunnelse og konsekvenser
 
-Faste plasseringer og navn etter ansvar gjør det enklere å finne frem. Roten har åtte sporede filer etter at skissene er flyttet. Verktøyenes inngangsfiler beholder sine forventede navn og plasseringer.
+Faste plasseringer og navn etter ansvar gjør det enklere å finne frem. Ved denne strukturendringen 3. oktober hadde roten åtte sporede filer etter at skissene var flyttet. Gjeldende rotfiler er beskrevet i [arbeidsreglene](../../AGENTS.md). Verktøyenes inngangsfiler beholder sine forventede navn og plasseringer.
 
 VS Code grupperer støttefilene under README og package.json og skjuler installerte pakker og verktøymapper i filoversikten. Dette er prosjektinnstillinger som kan endres i `.vscode/settings.json`; filene er fortsatt tilgjengelige. GitHubs filoversikt bruker ikke VS Code-innstillingene. Den fysiske strukturen og README fungerer også uten editorgrupperingen.
 

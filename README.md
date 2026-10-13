@@ -4,14 +4,16 @@
 
 Et JavaScript/Node.js-prosjekt der jeg videreutvikler [Amedias forsidecase](https://github.com/amedia/frontpage-case). Målet er en responsiv avisforside med saker fra Amedias API, tydelig feilhåndtering og dokumenterte tekniske valg.
 
-**Status:** Under arbeid. Komponentruten henter saker fra Amedias API og viser teasere med bilde, tittel og lenke. En egen include-komponent lar brukeren bytte mellom DT og BA. Layout etter Amedias skisser, samlet API-timeout og tester av teaserfilter og API-feil er lagt inn; En CI-workflow er lagt inn; GitHub-verifikasjon og flere KR-er gjenstår. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
+**Status:** Under arbeid. Komponentruten henter saker fra Amedias API og viser teasere med bilde, tittel og lenke. En egen include-komponent lar brukeren bytte mellom DT og BA. Layout etter Amedias skisser, samlet API-timeout og tester av teaserfilter og API-feil er lagt inn, og GitHub kjører testene automatisk. Flere KR-er og Runes siste gjennomgang gjenstår. [KR-er og oppgaver](https://github.com/sbbstudio/frontpage-case/issues?q=is%3Aissue%20label%3Akr) viser fremdriften.
 
 ### Leserekkefølge
+
+For teknisk gjennomgang: [leseguide til caset](docs/case/README.md) samler dataflyt, krav, kontroller og kjente begrensninger.
 
 1. **Prosjekt og kjøring:** denne siden, deretter [package.json](package.json).
 2. **Applikasjonen:** [server](src/server.js) → [ruter](src/routes/router.js) → [preview](src/views/preview.view.js) og [komponentmanifest](src/manifests/frontpage-manifest.js). Nettleserens filer: [frontpage.js](public/frontpage.js) og [frontpage.css](public/frontpage.css).
    Teaserdata hentes og klargjøres i [fetch-teasers.js](src/fetch-teasers.js). Komponenten i routeren validerer forespørselen, kaller funksjonen og lager HTML-svaret.
-3. **Kontroller:** [Teasertester](tests/fetch-teasers.test.js) kontrollerer bildefilter, antall og rekkefølge med faste API-svar. Videre testdekning og CI følger [KR9](https://github.com/sbbstudio/frontpage-case/issues/9).
+3. **Kontroller:** [Teasertester](tests/fetch-teasers.test.js) kontrollerer bildefilter, antall og rekkefølge med faste API-svar. Videre testdekning og CI-krav følger [KR9](https://github.com/sbbstudio/frontpage-case/issues/9).
 4. **Oppgave og valg:** [originaloppgave og skisser](docs/case/amedia-original.md), deretter [beslutninger](docs/decisions/).
 5. **Oppsett:** [applikasjonskonfigurasjon](src/config/config.js), [miljøfiler](config/) og [arbeidsregler](AGENTS.md).
 
@@ -109,15 +111,15 @@ Preview bruker eksterne Amedia-ressurser for komponentlasting og header og treng
 
 **Tester:** `npm test` kjører node:test. [Teasertestene](tests/fetch-teasers.test.js) dekker bildefilter, rekkefølge, antall og neste gruppe. [API-feiltestene](tests/api-errors.test.js) bruker en midlertidig lokal HTTP-server og dekker nettverksfeil, HTTP-feil, ugyldig JSON, tomt/uventet svar, ugyldig avis og timeout under JSON-lesing i neste gruppe. De kontrollerer også at serveren svarer videre etter feil. Nyhetskilden simuleres; testene bruker ikke live API. Visuell oppførsel og CI dekkes ikke. Testene er skrevet av Codex på Runes bestilling.
 
-**Kontroll 12. oktober 2026:** Codex kjørte 12 tester på Node 24.21.0; alle bestod. Timeout-testen utløste avbrudd etter omtrent fem sekunder. I en tidligere midlertidig kopi med bildekravet fjernet feilet fire filtertester. Bildefilter- og API-timeout-leveransene fikk uavhengig AI-review 12. oktober. Rune forklarte forskjellen mellom API-feil og vellykket tomtilstand. Den separate refaktoreringen som flyttet API-hentingen til fetch-teasers.js har fortsatt en åpen review-oppgave; dette er ikke en samlet godkjenning av hele repoet.
+**Kontroll 12. oktober 2026:** Codex kjørte 12 tester på Node 24.21.0; alle bestod. Timeout-testen utløste avbrudd etter omtrent fem sekunder. I en tidligere midlertidig kopi med bildekravet fjernet feilet fire filtertester. Bildefilter- og API-timeout-leveransene fikk uavhengig AI-review 12. oktober. Rune forklarte forskjellen mellom API-feil og vellykket tomtilstand. Den separate refaktoreringen som flyttet API-hentingen til fetch-teasers.js fikk også teknisk AI-review 13. oktober; Runes egen gjennomgang gjenstår. dette er ikke en samlet godkjenning av hele repoet.
 
 **Dokumentasjonskontroll 13. oktober 2026:** Codex sammenlignet leseguiden, README og beslutningene med gjeldende kode. Alle 76 lokale dokumentlenker pekte på eksisterende filer, og en ny kjøring av `npm test` på Node 24.21.0 ga 12 av 12 beståtte tester. Dette er en dokumentasjonskontroll og regresjonskjøring, ikke samlet releasegodkjenning.
 
 **API-ventetid:** Hele hentingen, inkludert neste grupper og JSON-lesing, deler en frist på fem sekunder. Timeout og API-feil gir HTTP 502 med «Kunne ikke hente nyheter nå.» Et tomt eller uventet svar avslutter hentingen; ingen egnede saker gir en tomtilstand med HTTP 200.
 
-Testene kjøres fra repoets rot med `npm test` på Node 24. `npm run build` er fortsatt en plassholder og er ingen kvalitetskontroll. [GitHub Actions-workflowen](.github/workflows/ci.yml) kjører npm ci og npm test på Node 24 ved pull requests, push til master og manuell kjøring. GitHub-resultatene verifiseres i CI-leveransen.
+Testene kjøres fra repoets rot med `npm test` på Node 24. `npm run build` er fortsatt en plassholder og er ingen kvalitetskontroll. [GitHub Actions](.github/workflows/ci.yml) kjører npm ci og npm test på Node 24 ved pull requests, push til master og manuell kjøring. [Leveransekontrollen](docs/evidence/2026-10-13-delivery.md) samler faktiske CI-resultater og oppstart fra ren kopi.
 
-**Kjent avhengighetsgjeld:** `npm audit` rapporterte seks sårbare pakker ved oppstartskontrollen 3. oktober 2026, inkludert en kritisk rapport for `convict`. Se beslutningen om lokal oppstart for detaljer. Avhengighetene er ikke oppdatert i KR1; dette må håndteres og verifiseres før publisering som en kjørende tjeneste.
+**Kjent avhengighetsgjeld:** `npm audit` rapporterte ni sårbare pakker ved leveransekontrollen 13. oktober 2026: to kritiske, fire høye, to moderate og én lav. De kritiske funnene gjelder convict og proxy-addr. Avhengighetene er ikke oppdatert her; dette må håndteres og kompatibilitetstestes før publisering som en kjørende tjeneste. [Leveransekontrollen](docs/evidence/2026-10-13-delivery.md) beskriver det kontrollerte oppsettet.
 
 ## Mappene
 
