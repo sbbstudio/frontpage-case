@@ -44,7 +44,7 @@ function usePages(t, pages) {
 test('returnerer tittel, artikkelsti og stort bilde for en gyldig sak', async (t) => {
   const calls = usePages(t, [[story('Første sak', '/forste', 'https://images.example/1.jpg')]]);
   assert.deepEqual(await fetchTeasers({ publication: 'www.dt.no', count: 10 }), [
-    { title: 'Første sak', path: '/forste', imageUrl: 'https://images.example/1.jpg' }
+    { title: 'Kontrollert CI-feil', path: '/forste', imageUrl: 'https://images.example/1.jpg' }
   ]);
   assert.equal(calls[0].searchParams.get('publicationDomain'), 'www.dt.no');
 });
