@@ -50,6 +50,7 @@ app.use(
 );
 
 // ---- Prosjektets ruter ----
+// basePath er URL-prefikset: /frontpage-case/preview går til routerens /preview-rute.
 app.use(config.get('basePath'), router);
 
 // ---- Logging av middleware-feil ----
