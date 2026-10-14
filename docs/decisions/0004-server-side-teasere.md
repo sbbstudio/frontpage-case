@@ -1,25 +1,21 @@
 # 0004 — Server-side rendering av teasere
 
-Dato: 9. oktober 2026.
+Dato: 9. oktober 2026. Oppdatert med API-uttrekk, timeout og kontroll av artikkellenker.
 
 ## Beslutning
 
-`GET /component` henter saker fra Amedias API og lager HTML for teaserne på serveren. Preview sender `publication` og `count` til komponenten. Nettleseren mottar ferdig HTML med bilde, tittel og lenke for hver sak som har de nødvendige feltene.
+`src/fetch-teasers.js` henter og klargjør teaserdata. `GET /component` validerer parametere, lager HTML og sender HTTP-svaret. Nettleseren mottar ferdige teasere med bilde, tittel og lenke.
 
-API-hentingen og klargjøringen ligger i `src/fetch-teasers.js`. Funksjonen får validert `publication` og `count`, og returnerer teaserdata. Komponentruten beholder validering, HTML og HTTP-respons; en hentefeil gir fortsatt HTTP 502. Dette skillet gjør databehandlingen tilgjengelig for kontroller uten å kjøre en HTTP-server.
+## Hvorfor
 
-## Begrunnelse
+Jeg valgte server-side rendering fordi dataflyten allerede går gjennom komponentruten. Nettleseren trenger derfor ikke et eget kall til nyhets-API-et. Skillet mellom datahenting og HTTP gjør filter og viderehenting mulig å teste uten en HTTP-server.
 
-Rune valgte server-side rendering fordi dataflyten allerede går gjennom komponentruten. Serveren kan bruke API-svaret til å sette sammen siden før den sendes til nettleseren. Nettleseren trenger dermed ikke å gjøre et eget kall til nyhets-API-et for å tegne teaserne.
+## Avgrensninger
 
-Serveren henter saker i grupper på 20 når komponentruten åpnes. Hvis en gruppe ikke gir nok gyldige teasere, henter den neste gruppe med `offset` til den har ønsket antall eller API-et ikke har flere saker. Valget fjerner ikke API-avhengigheten eller ventetiden. API-feil og ugyldige parametere håndteres i komponentruten.
+Hentingen beholder API-rekkefølgen og leser grupper på 20 til ønsket antall er funnet eller en gruppe har færre enn 20 saker. Sakene må ha tittel, HTTPS-bilde og en artikkelsti som blir på valgt avisdomene. URL-parseren kontrollerer også stier med backslash eller skjulte tegn som ellers kunne byttet domene.
 
-## Kontroller og begrensninger
+Alle grupper og lesing av JSON deler én frist på fem sekunder. Nettverksfeil, HTTP-feil, ugyldig JSON og timeout gir HTTP 502. Et tomt eller uventet svar avslutter hentingen og returnerer listen samlet så langt. API-avhengigheten består; en treg kilde kan gi feil selv om den ville svart senere.
 
-Artikkelstier må bli på den valgte avisens origin når de tolkes som en URL. Et enkelt krav om å starte med `/` er ikke nok: backslash eller skjulte tabulatorer kan få URL-parseren til å bytte domene. Ugyldige URL-er og stier som bytter origin filtreres bort før HTML bygges. En regresjonstest dekker disse tilfellene og en gyldig lokal sti med query-parametere.
+## Kontroll
 
-API-hentingen bruker en samlet frist på fem sekunder for alle grupper og lesing av responsinnhold. Nettverksfeil, HTTP-feil, ugyldig JSON og timeout gir HTTP 502 med en enkel beskjed. Et tomt eller uventet svar avslutter hentingen og beholder listen samlet så langt. Denne avgrensningen prioriterer at forhåndsvisningen svarer innen rimelig tid; en treg kilde kan derfor gi feil selv om den ville svart senere.
-
-Ved den opprinnelige kontrollen kontrollerte Codex lokalt at `count=1` ga én teaser, `count=10` ga åtte teasere fra et svar med ti saker, og ugyldig `count` ga HTTP 400. Rune så de faktiske teaserne i previewen og formulerte begrunnelsen for server-side rendering. To av de ti sakene manglet bilde i feltet som komponenten bruker, og ble hoppet over.
-
-Gjeldende automatiserte tester dekker bildefilter, antall, rekkefølge, viderehenting, API-feil, timeout, tomtilstand og avvisning av ugyldig avis. Nyhetskilden simuleres; HTTP-feiltestene bruker en lokal testserver. Layouten er tilpasset skissene; [layoutbeviset](../evidence/2026-10-12-layout.md) beskriver den lokale kontrollen. CI kjører testsuiten i GitHub; kontroll mot live API ved videre endringer gjenstår. Tester av bildefilter og API-feil/timeout fikk uavhengig AI-review 12. oktober; uttrekket til fetch-teasers.js fikk teknisk AI-review 13. oktober. Runes egen gjennomgang av denne leveransen gjenstår.
+[Automatiserte tester](../../tests/) dekker filtrering, antall, rekkefølge, viderehenting, artikkellenker, feil og tomtilstand med simulerte API-svar. [Leveransekontrollen](../evidence/2026-10-13-delivery.md) dokumenterer teknisk review og CI. Arbeidsdelingen er beskrevet i [0001](0001-opphav-og-arbeidsmate.md).

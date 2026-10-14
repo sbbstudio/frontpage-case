@@ -1,23 +1,19 @@
-# Avisvelger som egen include-komponent
+# 0005 — Avisvelger som egen include-komponent
 
-Dato: 2026-10-12
+Dato: 12. oktober 2026.
 
-## Valg
+## Beslutning
 
-Avisvelgeren for DT og BA er en egen `amedia-include`-komponent. Rune valgte samme mekanisme som header og teasere fremfor å skrive selve avislenkene direkte i `preview.view.js`.
+Jeg bruker en egen `amedia-include` for avisvelgeren mellom headeren og teaserne. Komponenten heter `publication-selector` gjennom hele kjeden: manifest, HTML-visning, CSS og ruter.
 
-`preview.view.js` plasserer include-elementet mellom headeren og teaserne. Manifestet på `/frontpage-case/publication-selector/manifest` beskriver HTML-ruten `/frontpage-case/publication-selector` og CSS-ressursen `/frontpage-case/assets/publication-selector.css`.
+Manifestet beskriver HTML-ruten og CSS-filen. Routeren kaller `renderPublicationSelector()` for å lage lenkene til DT og BA. Hver lenke åpner preview med valgt `publication`.
 
-`router.js` leverer manifestet som JSON og kaller `renderPublicationSelector()` fra `publication-selector.view.js` for å lage HTML. Vanlige lenker åpner preview med valgt `publication`. Egen JavaScript for avisbyttet er derfor ikke nødvendig. Amedias include-kode står fortsatt for innlasting av komponenten.
+## Hvorfor
 
-## Konsekvenser
+Avisvelgeren bruker samme mekanisme som header og teasere. Det gjør komponentgrensen tydelig og holder avislenkenes HTML ute av `preview.view.js`. Vanlige lenker gjør at byttet ikke trenger egen JavaScript; innlastingen bruker fortsatt Amedias include-kode.
 
-Komponenten har eget manifest, egen HTML-visning og egen CSS-fil, med navnet `publication-selector` gjennom hele kjeden. Dette gir flere filer og forespørsler enn direkte HTML, men gjør komponentgrensen og include-flyten tydelig. Amedia leverer fortsatt headeren med logo og avisens navigasjon; vår komponent velger hvilken avis preview viser.
+## Konsekvenser og kontroll
 
-Manifestets adresser er foreløpig bundet til `localhost:8080/frontpage-case`, som resten av preview-oppsettet. Dette må tilpasses før bruk på en annen vert eller under en annen basesti. Serveren må startes på nytt etter endring av manifest eller HTML-visning.
+Løsningen gir flere filer og forespørsler enn direkte HTML. Adressene er foreløpig bundet til `localhost:8080/frontpage-case`. Amedia leverer headeren med avisens navigasjon; avisvelgeren bestemmer hvilken avis preview viser.
 
-## Verifikasjon
-
-Rune bekreftet lokalt 12. oktober 2026 at avisbytte virker med mus, at stylingen vises, at Tab gir fokus, og at Enter åpner BA uten museklikk. Codex kontrollerte HTTP 200, JSON fra manifest-ruten og HTML med begge avislenkene fra komponentruten. Dette dokumenterer den prøvde flyten; det erstatter ikke automatiserte tester eller øvrige akseptansekriterier i KR6 og KR9.
-
-Implementasjon: Rune med kodeforslag og avgrensede endringer fra Codex. Dokumentasjon: Codex.
+Jeg bekreftet lokalt 12. oktober at mus bytter avis, Tab gir fokus og Enter åpner den valgte lenken. Codex kontrollerte manifest og HTML-respons. Dette er en avgrenset kontroll, ikke en full tilgjengelighetstest. Se [arbeidsdelingen](0001-opphav-og-arbeidsmate.md).

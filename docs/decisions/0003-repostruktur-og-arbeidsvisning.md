@@ -4,14 +4,14 @@ Dato: 3. oktober 2026.
 
 ## Beslutning
 
-README viser prosjektets leserekkefølge: oversikt, applikasjon, kontroller, dokumentasjon og oppsett. Den skiller felles repo-innganger, Node-oppsett, verktøyoppsett, prosjektinnhold og installerte pakker.
+README gir leserekkefølgen. Skissene ligger i `docs/case/sketches/`. Nettleserfilene heter `frontpage.js` og `frontpage.css`, og teasernes manifest heter `frontpage-manifest.js`. Importer og ressursadresser følger navnene.
 
-Skissene samles i `docs/case/sketches/`. Forsidens nettleserfiler heter `frontpage.js` og `frontpage.css`, og komponentbeskrivelsen heter `frontpage-manifest.js`. Import og ressursadresser følger filnavnene.
+## Hvorfor
 
-## Begrunnelse og konsekvenser
+Navn etter ansvar og faste plasseringer gjør det enklere å finne frem. Verktøyenes inngangsfiler beholder navnene og plasseringene de forventer.
 
-Faste plasseringer og navn etter ansvar gjør det enklere å finne frem. Ved denne strukturendringen 3. oktober hadde roten åtte sporede filer etter at skissene var flyttet. Gjeldende rotfiler er beskrevet i [arbeidsreglene](../../AGENTS.md). Verktøyenes inngangsfiler beholder sine forventede navn og plasseringer.
+## Konsekvenser
 
-VS Code grupperer støttefilene under README og package.json og skjuler installerte pakker og verktøymapper i filoversikten. Dette er prosjektinnstillinger som kan endres i `.vscode/settings.json`; filene er fortsatt tilgjengelige. GitHubs filoversikt bruker ikke VS Code-innstillingene. Den fysiske strukturen og README fungerer også uten editorgrupperingen.
+VS Code grupperer støttefiler og skjuler installerte pakker i filoversikten gjennom `.vscode/settings.json`. Filene er fortsatt tilgjengelige. GitHub bruker den fysiske mappestrukturen.
 
-Dette innfører arbeidsformen i denne casen. Den felles byggestandarden og andre repoer er ikke endret. Omdøpingene endrer ressursadressene til `/assets/frontpage.js` og `/assets/frontpage.css`; applikasjonens logikk er uendret.
+Omdøpingene endret ressursadressene til `/assets/frontpage.js` og `/assets/frontpage.css`, men ikke applikasjonslogikken. Se [mappene og arbeidsreglene](../../AGENTS.md).

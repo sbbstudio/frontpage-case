@@ -1,23 +1,21 @@
 # 0001 — Opphav og arbeidsmåte
 
-Dato: 3. oktober 2026.
+Dato: 3. oktober 2026. Arbeidsdelingen med AI er oppdatert 14. oktober.
 
 ## Beslutning
 
-Prosjektet videreutvikles i Runes eksisterende repo `sbbstudio/frontpage-case`, med tittelen «Forside — Rune Øverland». README presenterer prosjektets formål, faktiske status, leveranseplan og bruk av AI.
+Jeg videreutvikler Amedias forsidecase i `sbbstudio/frontpage-case`. [Originaloppgaven](../case/amedia-original.md), krediteringen og Git-historikken fra startkoden beholdes. README beskriver prosjektet og hvordan det kjøres.
 
-Amedias startkode og bidragsytere krediteres. Historikken fra utgangspunktet `59abcf958526698d58a76cf2d212542fb76c0b95` beholdes. Den opprinnelige oppgaven er bevart i `docs/case/amedia-original.md`, med relative lenker tilpasset plasseringen. Egen prosjektpresentasjon og nye endringer kommer som etterfølgende commits og PR-er.
+## Hvorfor
 
-## Begrunnelse
+Leseren skal kunne skille Amedias utgangspunkt fra mine endringer. Ti KR-issues deler arbeidet i leveranser med akseptansekriterier. Små PR-er viser hva som er endret; personlige læringslogger ligger i Notion.
 
-En leser skal kunne forstå Runes arbeid fra repoet og se hva som stammer fra Amedia. Den siste opprinnelige commit-forfatteren beskriver hvem som gjorde den endringen; den sier ikke hvem som eier videreutviklingen.
+## Arbeidsdeling med AI
 
-Ti KR-issues deler arbeidet i målbare leveranser over fem planlagte byggedager. Hvert issue har oppgaver og akseptansekriterier. Små PR-er gir etterprøvbar historikk; en PR kan dekke deler av et KR. Personlige læringslogger føres i Notion.
+Jeg bruker Codex som veileder og kodeassistent. Jeg har tatt valg underveis, arbeidet med koden og testet blant annet avisbytte med mus og tastatur. Vi har gått gjennom deler av backendflyten sammen, og gjennomgangen fortsetter.
 
-## Konsekvenser
+Codex har skrevet deler av implementasjonen, testene, CSS-en og dokumentasjonen, og kjørt tekniske kontroller. Separate AI-agenter har reviewet avgrensede endringer. Jeg har ansvar for prosjektet og valgene; PR-er og verifikasjonsnotater viser bidrag og kontroller.
 
-- Opprinnelig kode blir ikke presentert som Runes egenutviklede kode.
-- AI-bidrag er en del av den dokumenterte arbeidsmåten.
-- Ferdigstatus krever verifikasjon og gjennomgang, ikke bare produsert kode.
-- Repo-navnet og pakkens navn beholdes. Pakkenavnet brukes i konfigurasjonen for URL-stien, så en kosmetisk omdøping ville også kunne endre kjøringen.
-- Oppstart på støttet Node, reelle tester og CI er egne leveranser. Dette dokumentasjonsoppsettet fullfører dem ikke.
+## Avgrensning
+
+Repo- og pakkenavnet beholdes. Pakkenavnet brukes i konfigurasjonen for URL-stien, så en omdøping kan påvirke kjøringen. En ferdig PR lukker bare et KR når alle kriteriene er oppfylt.
